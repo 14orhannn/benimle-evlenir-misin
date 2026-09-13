@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benimle Evlenir Misin?</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #000000;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+        h1 {
+            color: #ffffff;
+            font-size: 2.5rem;
+            user-select: none;
+            z-index: 5;
+        }
+        .buttons {
+            margin-top: 20px;
+            position: relative;
+            width: 300px;
+            height: 100px;
+            z-index: 5;
+        }
+        button {
+            font-size: 1.2rem;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.1s;
+            position: absolute;
+            font-weight: bold;
+        }
+        #yesBtn {
+            background-color: #1b4d3e;
+            color: #ffffff;
+            left: 20px;
+            top: 20px;
+        }
+        #noBtn {
+            background-color: #8b0000;
+            color: #ffffff;
+            right: 20px;
+            top: 20px;
+        }
+        .love-text {
+            position: absolute;
+            color: #ff003c;
+            font-weight: 900;
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            white-space: nowrap;
+            user-select: none;
+            pointer-events: none;
+            text-shadow: 0 0 15px #ff003c, 0 0 25px #8b0000;
+            animation: floatDown linear forwards; 
+        }
+        @keyframes floatDown {
+            0% { transform: translateY(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1 id="question">benimle evlenir misin?🥹</h1>
+    
+    <div class="buttons" id="btnContainer">
+        <button id="yesBtn" onclick="celebrate()">Evet</button>
+        <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">Hayır</button>
+    </div>
+
+    <!-- Uzantıyı direkt senin orijinal m4a dosyana göre ayarladım -->
+    <audio id="bgMusic" src="sarki.m4a" preload="auto" loop="true"></audio>
+
+    <script>
+        const bgMusic = document.getElementById('bgMusic');
+
+        function moveButton() {
+            const noBtn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 40) + 20;
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 40) + 20;
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+        }
+
+        function celebrate() {
+            bgMusic.play().catch(error => console.log("Müzik hatası:", error));
+            
+            document.getElementById('question').style.display = 'none';
+            document.getElementById('btnContainer').style.display = 'none';
+
+            setInterval(createLoveText, 40);
+        }
+
+        function createLoveText() {
+            const text = document.createElement('div');
+            text.classList.add('love-text');
+            text.innerText = "love you";
+            text.style.left = (Math.random() * 90 + 5) + "vw";
+            text.style.top = (Math.random() * 90) + "vh"; 
+            
+            const randomSize = Math.random() * (3.2 - 0.8) + 0.8; 
+            text.style.fontSize = randomSize + "rem";
+            
+            const randomDuration = Math.random() * 1.5 + 1.5;
+            text.style.animationDuration = randomDuration + "s";
+            
+            document.body.appendChild(text);
+            setTimeout(() => { text.remove(); }, randomDuration * 1000);
+        }
+    </script>
+</body>
+</html>
+
